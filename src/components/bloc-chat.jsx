@@ -1,36 +1,54 @@
-import firebase from "firebase";
 import React from "react";
 import ReactFireMixin from "reactfire";
 
+import SignIn from "./sign-in";
+
 const BlocChat = React.createClass({
+
+  messagesRef: firebase.database().ref("messages"), // eslint-disable-line no-undef
+  usersRef: firebase.database().ref("users"), // eslint-disable-line no-undef
 
   mixins: [ReactFireMixin],
 
+  getInitialState() {
+    return {
+      messages: [],
+      user: null
+    };
+  },
+
   componentWillMount() {
-    firebase.initializeApp({
-      apiKey: "AIzaSyCX1Q4yD-2vIE8YNM9Kjgtd3wm1ExIbp2o",
-      authDomain: "chat-1794e.firebaseapp.com",
-      databaseURL: "https://chat-1794e.firebaseio.com",
-      storageBucket: ""
+    const self = this;
+    firebase.auth().onAuthStateChanged((authData) => { // eslint-disable-line no-undef
+      if (authData) {
+        self.setState({user: authData});
+      }
     });
-    const ref = firebase.database().ref("messages");
-    this.bindAsArray(ref, "messages");
+    this.bindAsArray(this.messagesRef, "messages");
   },
 
   render() {
     // console.log("BlocChat:render", this.state);
-    const { messages } = this.state;
-    return (
+    const { messages, user } = this.state;
+    return !user ? <SignIn /> : (
       <div>
         {
           messages.length ? messages.map((message, index) =>
-          <div key={index}>{message.text}</div>) : "Loading messages…"
+            <div key={index}>
+              <b>{message.user.displayName}</b>
+              <span>{message.text}</span>
+            </div>) : "Loading messages…"
         }
         <form onSubmit={(e) => e.preventDefault()}>
           <input ref="text"/>
           <button onClick={() =>
-            firebase.database().ref("messages").push({
-              text: this.refs.text.value
+            this.messagesRef.push({
+              text: this.refs.text.value,
+              user: {
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+                uid: user.uid
+              }
             })}
           >Send</button>
         </form>
