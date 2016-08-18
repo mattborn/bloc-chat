@@ -1,21 +1,68 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import firebase from 'firebase';
+import React from 'react';
+import ReactFireMixin from 'reactfire';
 
-class App extends Component {
+import './App.css';
+import SignIn from './SignIn';
+
+firebase.initializeApp({
+  apiKey: 'AIzaSyCX1Q4yD-2vIE8YNM9Kjgtd3wm1ExIbp2o',
+  authDomain: 'chat-1794e.firebaseapp.com',
+  databaseURL: 'https://chat-1794e.firebaseio.com',
+  storageBucket: '',
+});
+window.firebase = firebase;
+
+const App = React.createClass({
+
+  messagesRef: firebase.database().ref('messages'),
+
+  mixins: [ReactFireMixin],
+
+  getInitialState() {
+    return {
+      messages: [],
+      user: null,
+    };
+  },
+
+  componentWillMount() {
+    const self = this;
+    firebase.auth().onAuthStateChanged((authData) => {
+      if (authData) {
+        self.setState({user: authData});
+      }
+    });
+    this.bindAsArray(this.messagesRef, 'messages');
+  },
+
   render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+    console.log('App:render', this.state);
+    const { messages, user } = this.state;
+    return !user ? <SignIn /> : (
+      <div>
+        {
+          messages.length ? messages.map((message, index) =>
+            <div key={index}>
+              <b>{message.user.displayName}</b>
+              <span>{message.text}</span>
+            </div>) : 'Loading messages…'
+        }
+        <form onSubmit={(e) => e.preventDefault()}>
+          <input ref="text"/>
+          <button onClick={() =>
+            this.messagesRef.push({
+              text: this.refs.text.value,
+              user: {
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+                uid: user.uid,
+              },
+            })}
+          >Send</button>
+        </form>
       </div>
     );
-  }
-}
-
+  },
+});
 export default App;
