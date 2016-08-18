@@ -1,6 +1,6 @@
 {
   "name": "bloc-chat",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Simple chat with Builder, Firebase, and React",
   "main": "lib/index.js",
   "scripts": {
