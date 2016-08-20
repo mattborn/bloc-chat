@@ -1,8 +1,10 @@
 import firebase from 'firebase';
+import moment from 'moment';
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 
 import './App.css';
+import Form from './Form';
 import SignIn from './SignIn';
 
 firebase.initializeApp({
@@ -12,6 +14,7 @@ firebase.initializeApp({
   storageBucket: '',
 });
 window.firebase = firebase;
+window.moment = moment;
 
 const App = React.createClass({
 
@@ -43,24 +46,13 @@ const App = React.createClass({
       <div>
         {
           messages.length ? messages.map((message, index) =>
-            <div key={index}>
+            <div className="message" key={index}>
               <b>{message.user.displayName}</b>
+              <em>{moment(message.time).fromNow()}</em>
               <span>{message.text}</span>
             </div>) : 'Loading messages…'
         }
-        <form onSubmit={(e) => e.preventDefault()}>
-          <input ref="text"/>
-          <button onClick={() =>
-            this.messagesRef.push({
-              text: this.refs.text.value,
-              user: {
-                displayName: user.displayName,
-                photoURL: user.photoURL,
-                uid: user.uid,
-              },
-            })}
-          >Send</button>
-        </form>
+        <Form messagesRef={this.messagesRef} user={user} />
       </div>
     );
   },
