@@ -18,8 +18,8 @@ const Form = React.createClass({
   render() {
     return (
       <form className="form" onSubmit={this.submit}>
-        <input ref="text"/>
-        <button>Send</button>
+        <input className="form-input" placeholder="Write something…" ref="text"/>
+        <button className="form-button">Send</button>
       </form>
     );
   }
