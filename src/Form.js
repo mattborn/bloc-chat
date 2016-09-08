@@ -4,15 +4,18 @@ const Form = React.createClass({
 
   submit(e) {
     e.preventDefault();
-    this.props.messagesRef.push({
-      text: this.refs.text.value,
-      time: Date.now(),
-      user: {
-        displayName: this.props.user.displayName,
-        photoURL: this.props.user.photoURL,
-        uid: this.props.user.uid,
-      },
-    });
+    const text = this.refs.text.value;
+    if (text.trim()) {
+      this.props.messagesRef.push({
+        text: text,
+        time: Date.now(),
+        user: {
+          displayName: this.props.user.displayName,
+          photoURL: this.props.user.photoURL,
+          uid: this.props.user.uid,
+        },
+      });
+    }
   },
 
   render() {
