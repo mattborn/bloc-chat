@@ -1,24 +1,43 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css";
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css";
+
 body {
+  color: #444;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif; /* smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide */
+  -webkit-font-smoothing: antialiased;
+  line-height: 1;
   margin: 0;
   padding: 0 0 80px;
-  font-family: sans-serif;
 }
+
 button,
 input{
   font: inherit;
   padding: .5em;
 }
 
-.message { padding: .5em; }
-.message + .message { border-top: 1px solid lightgray; }
-.message > em {
-  color: lightgray;
-  margin: .5em;
+.message {
+  display: flex;
+  line-height: 20px;
+  padding: 8px;
 }
-.message > span {
-  display: block;
-  margin-top: .2em;
+.message:hover { background: rgba(0,0,0,.03); }
+.message-photo {
+  border-radius: 3px;
+  height: 40px;
+  margin-right: 8px;
+  width: 40px;
 }
+.message-body { flex: 1; }
+.message-name {
+  display: inline-block;
+  font-weight: 600;
+  margin-right: 8px;
+}
+.message-time { color: lightgray; }
+.message-text {}
 
 .form {
   background: white;
