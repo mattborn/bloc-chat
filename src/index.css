@@ -2,33 +2,40 @@
 @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css";
 
 body {
-  color: #444;
+  background: linear-gradient(160deg, #ad6bff, #74bcf7);
+  background-attachment: fixed;
+  color: white;
   display: flex;
   flex-direction: column;
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif; /* smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide */
   -webkit-font-smoothing: antialiased;
   line-height: 1;
   margin: 0;
-  padding: 0 0 80px;
+  padding: 48px 0 96px;
 }
 
 button,
 input{
+  color: inherit;
   font: inherit;
-  padding: .5em;
+  padding: 8px;
+}
+button {
+  cursor: pointer;
 }
 
 .message {
   display: flex;
   line-height: 20px;
-  padding: 8px;
+  padding: 16px 24px;
 }
-.message:hover { background: rgba(0,0,0,.03); }
+.message:hover { background: rgba(255,255,255,.1); }
 .message-photo {
   border-radius: 3px;
-  height: 40px;
-  margin-right: 8px;
-  width: 40px;
+  box-shadow: 0 10px 50px rgba(0,0,0,.2);
+  height: 48px;
+  margin-right: 24px;
+  width: 48px;
 }
 .message-body { flex: 1; }
 .message-name {
@@ -36,18 +43,30 @@ input{
   font-weight: 600;
   margin-right: 8px;
 }
-.message-time { color: lightgray; }
-.message-text {}
+.message-time { opacity: .5; }
+.message-text { margin-top: 8px; }
 
 .form {
-  background: white;
-  border-top: 1px solid lightgray;
+  background: black;
   bottom: 0;
   box-sizing: border-box;
   display: flex;
   left: 0;
-  padding: 1em;
+  padding: 8px;
   position: fixed;
   width: 100%;
 }
-.form > input { flex: 1; }
+.form-input,
+.form-button {
+  background: none;
+  border: none;
+  padding: 16px;
+}
+.form-input { flex: 1; }
+.form-button {
+  color: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
