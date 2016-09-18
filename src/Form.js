@@ -13,6 +13,7 @@ const Form = React.createClass({
         uid: this.props.user.uid,
       },
     });
+    this.refs.text.value = '';
   },
 
   render() {
