@@ -13,13 +13,14 @@ const Form = React.createClass({
         uid: this.props.user.uid,
       },
     });
+    this.refs.text.value = '';
   },
 
   render() {
     return (
       <form className="form" onSubmit={this.submit}>
-        <input ref="text"/>
-        <button>Send</button>
+        <input className="form-input" placeholder="Write something…" ref="text"/>
+        <button className="form-button">Send</button>
       </form>
     );
   }

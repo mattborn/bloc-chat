@@ -1,10 +1,10 @@
 import firebase from 'firebase';
-import moment from 'moment';
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 
 import './App.css';
 import Form from './Form';
+import List from './List';
 import SignIn from './SignIn';
 
 firebase.initializeApp({
@@ -14,7 +14,6 @@ firebase.initializeApp({
   storageBucket: '',
 });
 window.firebase = firebase;
-window.moment = moment;
 
 const App = React.createClass({
 
@@ -40,17 +39,12 @@ const App = React.createClass({
   },
 
   render() {
-    console.log('App:render', this.state);
+    // console.log('App:render', this.state);
     const { messages, user } = this.state;
     return !user ? <SignIn /> : (
       <div>
         {
-          messages.length ? messages.map((message, index) =>
-            <div className="message" key={index}>
-              <b>{message.user.displayName}</b>
-              <em>{moment(message.time).fromNow()}</em>
-              <span>{message.text}</span>
-            </div>) : 'Loading messages…'
+          messages.length ? <List messages={messages} /> : 'Loading messages…'
         }
         <Form messagesRef={this.messagesRef} user={user} />
       </div>
