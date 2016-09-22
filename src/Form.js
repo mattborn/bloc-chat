@@ -3,8 +3,8 @@ import React from 'react';
 const Form = React.createClass({
 
   submit(e) {
+    // PREVENT SUBMISSION WITH EMPTY INPUT BOX ==
     e.preventDefault();
-
     const text = this.refs.text.value;
     if (text.trim()) {
       this.props.messagesRef.push({
