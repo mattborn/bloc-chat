@@ -22,7 +22,7 @@ const List = React.createClass({
                 <img className="message-photo" alt={message.user.displayName} src={message.user.photoURL}/>
                 <div className="message-body">
                   <b className="message-name">{message.user.displayName}</b>
-                  <em className="message-time">{moment(message.time).fromNow()}</em>
+                  <em className="message-time">{moment(message.time).format("dddd, MMMM Do YYYY, h:mm:ss a")}</em>
                   <div className="message-text">{message.text}</div>
                 </div>
               </div>
