@@ -38,6 +38,10 @@ const App = React.createClass({
     this.bindAsArray(this.messagesRef, 'messages');
   },
 
+  componentDidUpdate() {
+    window.scroll(0, document.documentElement.offsetHeight);
+  },
+
   render() {
     // console.log('App:render', this.state);
     const { messages, user } = this.state;
